@@ -1,0 +1,23 @@
+$ui-grey: rgb(73, 73, 71);
+$ui-grey-dark: #494947;
+$ui-inactive: #dbdbdb;
+$ui-white: #fff;
+$ui-text-color: #002d3f;
+$ui-green: #6fcf97;
+$ui-red: #ff5252;
+$ui-blue: #00a4e6;
+$ui-black-blue: #37515f;
+$ui-font-size-smallest: 1.06rem; //17px
+$ui-font-size-basic: 1.43rem; // 23px
+$ui-font-size-header: 2.06rem; // 33px
+$ui-font-size-large-header: 3.56rem; // 57px
+$ui-font-size-large-second-header: 5.43rem; // 87px
+$ui-font-size-largest-header: 8.75rem; // 140px
+// basic margin and padding, simple way to change it in all app
+// basic size for many margin, padding, width. Simple way to change all in mobile version
+$basic-margin: 0.625rem; // 10px if 1rem = 16px
+$ui-desktop: 1199px;
+$ui-tablet: 991px; //lg
+$ui-small-tablet: 767px; //md
+$ui-small-device: 576px; //sm
+$ui-smartphone: 360px;
