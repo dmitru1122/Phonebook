@@ -4,6 +4,7 @@ import { IContanct } from "@/interfaces/appInterfaces";
 
 export interface State {
   contacts: Array<IContanct>;
+  choosenContact: IContanct;
   isFetchContactsLoading: boolean;
   statusAddContactLoading: string;
 }
@@ -11,6 +12,7 @@ export interface State {
 export default createStore<State>({
   state: {
     contacts: [],
+    choosenContact: {} as IContanct,
     isFetchContactsLoading: false,
     statusAddContactLoading: "default",
   },
@@ -36,12 +38,8 @@ export default createStore<State>({
       state.isFetchContactsLoading = bool;
     },
     removeItem(state, id) {
-      console.log(state);
-      console.log(id);
-      console.log(id);
       const i = state.contacts.map((item) => item.id).indexOf(id);
       state.contacts.splice(i, 1);
-      console.log(i);
     },
     setAddLoading(state, bool) {
       state.statusAddContactLoading = bool;
@@ -85,17 +83,13 @@ export default createStore<State>({
     },
     async deleteContact({ state, commit }, id): Promise<void> {
       try {
-        commit("setAddLoading", "loading");
-
-        const { data } = await axios.delete<{ message: string; data: any }>(
+        await axios.delete<{ message: string; data: any }>(
           `http://localhost:3000/posts/${id}`
         );
 
         commit("removeItem", id);
-        commit("setAddLoading", "success");
       } catch (e) {
         console.error(e);
-        commit("setAddLoading", "error");
       }
     },
   },

@@ -1,17 +1,17 @@
 {
   "posts": [
     {
-      "firstName": "",
-      "lastName": "sdf",
-      "email": "dima@fsd.com",
-      "phoneNumber": "12312",
-      "id": 1
-    },
-    {
       "firstName": "Vita",
       "email": "fdf@fsd.com",
       "phoneNumber": "2432",
       "id": 2
+    },
+    {
+      "firstName": "fsd",
+      "lastName": "sdf",
+      "email": "sdf@test.test",
+      "phoneNumber": "123123",
+      "id": 3
     }
   ],
   "comments": [],
