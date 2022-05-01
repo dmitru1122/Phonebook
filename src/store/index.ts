@@ -4,7 +4,7 @@ import { IContanct } from "@/interfaces/appInterfaces";
 
 export interface State {
   contacts: Array<IContanct>;
-  choosenContact: IContanct;
+  chosenContact: IContanct;
   isFetchContactsLoading: boolean;
   statusAddContactLoading: string;
 }
@@ -12,7 +12,7 @@ export interface State {
 export default createStore<State>({
   state: {
     contacts: [],
-    choosenContact: {} as IContanct,
+    chosenContact: {} as IContanct,
     isFetchContactsLoading: false,
     statusAddContactLoading: "default",
   },
@@ -25,6 +25,9 @@ export default createStore<State>({
     },
     get_statusAddContactLoading(state) {
       return state.statusAddContactLoading;
+    },
+    get_chosenContact(state) {
+      return state.chosenContact;
     },
   },
   mutations: {
@@ -41,6 +44,7 @@ export default createStore<State>({
       const i = state.contacts.map((item) => item.id).indexOf(id);
       state.contacts.splice(i, 1);
     },
+
     setAddLoading(state, bool) {
       state.statusAddContactLoading = bool;
       if (bool === "success" || bool === "error") {
@@ -48,6 +52,23 @@ export default createStore<State>({
           state.statusAddContactLoading = "default";
         }, 2000);
       }
+    },
+
+    addChosenContact(state, chosenContact) {
+      state.chosenContact = chosenContact;
+    },
+    resetChosenContact(state) {
+      state.chosenContact = {} as IContanct;
+    },
+    updatedContactsDependsOnChosenContact(state, chosenContact) {
+      state.contacts = state.contacts.map((item) => {
+        console.log(item);
+        console.log(chosenContact);
+        if (item.id === chosenContact.id) {
+          return chosenContact;
+        }
+        return item;
+      });
     },
   },
   actions: {
@@ -88,6 +109,25 @@ export default createStore<State>({
         );
 
         commit("removeItem", id);
+      } catch (e) {
+        console.error(e);
+      }
+    },
+    updatedChosenContact({ commit }, chosenContact): void {
+      commit("addChosenContact", chosenContact);
+    },
+    removeChosenContact({ commit }): void {
+      commit("resetChosenContact");
+    },
+
+    async updateContact({ commit }, chosenContact): Promise<void> {
+      try {
+        console.log(chosenContact);
+        await axios.put<{ message: string; data: any }>(
+          `http://localhost:3000/posts/${chosenContact.id}`,
+          chosenContact
+        );
+        commit("updatedContactsDependsOnChosenContact", chosenContact);
       } catch (e) {
         console.error(e);
       }

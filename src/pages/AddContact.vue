@@ -3,7 +3,7 @@
     <div class="close-btn" @click="close">
       <img src="@/assets/close.png" class="close-btn__img" alt="close" />
     </div>
-    <h1>ADD CONTACT</h1>
+    <h1>{{ get_chosenContact?.id ? "EDIT" : "ADD" }} CONTACT</h1>
     <form
       :class="[
         `add-contact__form ${
@@ -64,7 +64,11 @@
       </div>
 
       <div>
-        <MyButton actionTitle="Add" myStyle="green" type="submit" />
+        <MyButton
+          :actionTitle="get_chosenContact?.id ? 'Edit' : 'Add'"
+          myStyle="green"
+          type="submit"
+        />
         <MyButton actionTitle="clear" myStyle="red" @click="clear" />
       </div>
       <div
@@ -82,8 +86,7 @@
 
 // work with form withou spec libraries - it's bad idea
 <script lang="ts">
-import { defineComponent, ref } from "vue";
-import Contact from "../components/Contact.vue"; // @ is an alias to /src
+import { defineComponent } from "vue";
 import { IContanct } from "../interfaces/appInterfaces";
 import MyButton from "@/components/MyButton.vue";
 import { mapGetters, mapActions } from "vuex";
@@ -93,6 +96,10 @@ export default defineComponent({
   components: {
     MyButton,
   },
+  // заменить на адекватный тип
+  props: {
+    type: String,
+  },
 
   data() {
     return {
@@ -100,9 +107,18 @@ export default defineComponent({
     };
   },
 
+  mounted() {
+    if (this.get_chosenContact) {
+      console.log(this.get_chosenContact);
+      this.contact = this.get_chosenContact;
+    }
+  },
+
   methods: {
     ...mapActions({
       addContacts: "addContacts",
+      removeChosenContact: "removeChosenContact",
+      updateContact: "updateContact",
     }),
 
     clear(): void {
@@ -111,15 +127,24 @@ export default defineComponent({
 
     close(): void {
       this.clear();
+      console.log(this.get_chosenContact?.id);
+      if (this.get_chosenContact) {
+        this.removeChosenContact();
+      }
       this.$router.push("/");
     },
     addNewContact(): void {
-      this.addContacts(this.contact);
+      if (this.get_chosenContact?.id) {
+        this.updateContact(this.contact);
+      } else {
+        this.addContacts(this.contact);
+      }
     },
   },
   computed: {
     ...mapGetters({
       get_statusAddContactLoading: "get_statusAddContactLoading",
+      get_chosenContact: "get_chosenContact",
     }),
   },
   watch: {

@@ -10,7 +10,7 @@
     <div class="card__text">{{ contact?.email }}</div>
     <div class="card__caption">{{ contact?.id }}</div>
     <div class="card__actions">
-      <MyButton actionTitle="Update" my-style="green" />
+      <MyButton actionTitle="Update" my-style="green" @click="updatedContact" />
       <MyButton
         actionTitle="Delete"
         @click.once="handleDelete"
@@ -43,6 +43,7 @@ export default defineComponent({
   methods: {
     ...mapActions({
       deleteContact: "deleteContact",
+      updatedChosenContact: "updatedChosenContact",
     }),
     handleDelete() {
       this.deleteContact(this.contact?.id);
@@ -53,6 +54,11 @@ export default defineComponent({
       // } catch (e) {
       //   console.error(e);
       // }
+    },
+    updatedContact() {
+      console.log(this.contact);
+      this.updatedChosenContact(this.contact);
+      this.$router.push("/add");
     },
   },
 });

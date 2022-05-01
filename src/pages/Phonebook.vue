@@ -37,6 +37,7 @@ export default defineComponent({
 
   data() {
     return {
+      typeEdition: String,
       // listContacts: [] as [IContanct],
     };
   },
