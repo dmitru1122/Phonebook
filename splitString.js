@@ -1,24 +1,5 @@
 function splitString(string, splitBy) {
   const resArr = [];
-  let seachFrom = 0;
-
-  function serchFrom(str, indexFrom) {
-    console.log(indexFrom);
-    let index = string.indexOf(splitBy, indexFrom);
-    console.log(index);
-    if (index != -1) {
-      resArr.push(str.substring(indexFrom, index));
-      serchFrom(str, index + 1);
-    }
-  }
-  serchFrom(string, seachFrom);
-  return resArr;
-}
-
-splitString("ABBCCDDEEBBAABB", "BB");
-
-function splitStringBy(string, splitBy) {
-  const resArr = [];
 
   if (string === splitBy) {
     resArr.push(string);
@@ -31,7 +12,11 @@ function splitStringBy(string, splitBy) {
       resArr.push(splitBy);
     }
   });
+  if (string.endsWith(splitBy)) {
+    resArr.push(splitBy);
+  }
+
   return resArr;
 }
 
-splitStringBy("ABBCCDDEEBBAABB", "BB");
+splitString("ABBCCDDEEBBAABB", "BB");
