@@ -14,8 +14,6 @@ function splitString(string, splitBy) {
       serchFrom(str, index + splitBy.length);
       return;
     }
-    console.log(str.length);
-    console.log(index);
     if (str.length > index) {
       const substringStr = str.substring(indexFrom);
       if (substringStr != "") {
