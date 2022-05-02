@@ -1,19 +1,5 @@
 {
-  "posts": [
-    {
-      "firstName": "",
-      "lastName": "sdf",
-      "email": "dima@fsd.com",
-      "phoneNumber": "12312",
-      "id": 1
-    },
-    {
-      "firstName": "Vita",
-      "email": "fdf@fsd.com",
-      "phoneNumber": "2432",
-      "id": 2
-    }
-  ],
+  "posts": [],
   "comments": [],
   "profile": {
     "name": "typicode"
