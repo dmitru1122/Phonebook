@@ -10,7 +10,7 @@
     <div class="card__text">{{ contact?.email }}</div>
     <div class="card__caption">{{ contact?.id }}</div>
     <div class="card__actions">
-      <MyButton actionTitle="Update" my-style="green" />
+      <MyButton actionTitle="Update" my-style="green" @click="updatedContact" />
       <MyButton
         actionTitle="Delete"
         @click.once="handleDelete"
@@ -28,31 +28,27 @@ import MyButton from "@/components/MyButton.vue";
 import { mapActions } from "vuex";
 
 export default defineComponent({
-  name: "HelloWorld",
+  name: "ContactTemplate",
   components: {
     MyButton,
   },
   props: {
     contact: Object as PropType<IContanct>,
   },
-  watch: {
-    contact(newVal) {
-      console.log(newVal);
-    },
-  },
+
   methods: {
     ...mapActions({
       deleteContact: "deleteContact",
+      updatedChosenContact: "updatedChosenContact",
     }),
+
     handleDelete() {
       this.deleteContact(this.contact?.id);
-      // try {
-      //   const { data } = await axios.delete(
-      //     `http://localhost:3000/posts/${this.contact?.id}`
-      //   );
-      // } catch (e) {
-      //   console.error(e);
-      // }
+    },
+
+    updatedContact() {
+      this.updatedChosenContact(this.contact);
+      this.$router.push("/edit");
     },
   },
 });

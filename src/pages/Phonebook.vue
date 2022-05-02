@@ -2,12 +2,18 @@
   <div class="phonebook container">
     <h1 class="header">Phonebook</h1>
     <div></div>
-    <div class="phonebook__list" v-if="!get_isFetchContactsLoading">
+    <div
+      class="phonebook__list"
+      v-if="
+        get_statusFetchContactsLoading === 'default' ||
+        get_statusFetchContactsLoading === 'success'
+      "
+    >
       <div class="phonebook__add">
         <MyButton
           actionTitle="add"
           my-style="green"
-          @click="$router.push('/add')"
+          @click="$router.push('/edit')"
         />
       </div>
       <Contact
@@ -16,15 +22,29 @@
         :contact="contact"
         @update="update"
       />
+      <div v-if="get_contacts.length === 0" class="phonebook__status">
+        Empty
+      </div>
     </div>
-    <div v-else>Идет загрузка...</div>
+    <div
+      v-if="get_statusFetchContactsLoading === 'loading'"
+      class="phonebook__status"
+    >
+      Loading...
+    </div>
+
+    <div
+      v-if="get_statusFetchContactsLoading === 'error'"
+      class="phonebook__status phonebook__status--error"
+    >
+      Error
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 import Contact from "../components/Contact.vue"; // @ is an alias to /src
-import { IContanct } from "../interfaces/appInterfaces";
 import MyButton from "@/components/MyButton.vue";
 import { mapGetters, mapActions } from "vuex";
 
@@ -37,7 +57,7 @@ export default defineComponent({
 
   data() {
     return {
-      // listContacts: [] as [IContanct],
+      typeEdition: String,
     };
   },
   methods: {
@@ -49,14 +69,8 @@ export default defineComponent({
   computed: {
     ...mapGetters({
       get_contacts: "get_contacts",
-      get_isFetchContactsLoading: "get_isFetchContactsLoading",
+      get_statusFetchContactsLoading: "get_statusFetchContactsLoading",
     }),
-  },
-
-  watch: {
-    get_contacts(newVal) {
-      //   this.fetchContacts();
-    },
   },
 
   mounted() {
@@ -84,6 +98,19 @@ export default defineComponent({
   }
   &__list {
     width: 60%;
+  }
+  &__status {
+    padding: 3 * $basic-margin;
+    font-size: $ui-font-size-large-header;
+    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2),
+      0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    border-radius: 3 * $basic-margin;
+
+    &--error {
+      background-color: $ui-red;
+      border-color: $ui-red;
+      color: $ui-white;
+    }
   }
 }
 </style>
