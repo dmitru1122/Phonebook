@@ -1,21 +1,29 @@
 function splitString(string, splitBy) {
   const resArr = [];
+  let seachFrom = 0;
 
-  if (string === splitBy) {
-    resArr.push(string);
-    return resArr;
-  }
-  const arr = string.split(splitBy).filter((el) => el);
-  arr.forEach((i, index, arr) => {
-    resArr.push(i);
-    if (index < arr.length - 1) {
+  function serchFrom(str, indexFrom) {
+    let index = string.indexOf(splitBy, indexFrom);
+    if (index != -1) {
+      const substringStr = str.substring(indexFrom, index);
+      if (substringStr != "") {
+        resArr.push(substringStr);
+      }
+
       resArr.push(splitBy);
+      serchFrom(str, index + splitBy.length);
+      return;
     }
-  });
-  if (string.endsWith(splitBy)) {
-    resArr.push(splitBy);
+    console.log(str.length);
+    console.log(index);
+    if (str.length > index) {
+      const substringStr = str.substring(indexFrom);
+      if (substringStr != "") {
+        resArr.push(substringStr);
+      }
+    }
   }
-
+  serchFrom(string, seachFrom);
   return resArr;
 }
 
