@@ -96,10 +96,6 @@ export default defineComponent({
   components: {
     MyButton,
   },
-  // заменить на адекватный тип
-  props: {
-    type: String,
-  },
 
   data() {
     return {
@@ -109,7 +105,6 @@ export default defineComponent({
 
   mounted() {
     if (this.get_chosenContact?.id) {
-      console.log(this.get_chosenContact);
       this.contact = this.get_chosenContact;
     }
   },
@@ -147,12 +142,12 @@ export default defineComponent({
     }),
   },
   watch: {
-    get_statusAddContactLoading(newVal) {
+    get_statusAddContactLoading(newVal: string): void {
       if (newVal === "success") {
         this.contact = {} as IContanct;
       }
     },
-    get_chosenContact(newVal) {
+    get_chosenContact(newVal: IContanct): void {
       if (newVal.id) {
         this.contact = newVal;
       }

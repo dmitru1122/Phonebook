@@ -28,37 +28,27 @@ import MyButton from "@/components/MyButton.vue";
 import { mapActions } from "vuex";
 
 export default defineComponent({
-  name: "HelloWorld",
+  name: "ContactTemplate",
   components: {
     MyButton,
   },
   props: {
     contact: Object as PropType<IContanct>,
   },
-  watch: {
-    contact(newVal) {
-      console.log(newVal);
-    },
-  },
+
   methods: {
     ...mapActions({
       deleteContact: "deleteContact",
       updatedChosenContact: "updatedChosenContact",
     }),
+
     handleDelete() {
       this.deleteContact(this.contact?.id);
-      // try {
-      //   const { data } = await axios.delete(
-      //     `http://localhost:3000/posts/${this.contact?.id}`
-      //   );
-      // } catch (e) {
-      //   console.error(e);
-      // }
     },
+
     updatedContact() {
-      console.log(this.contact);
       this.updatedChosenContact(this.contact);
-      this.$router.push("/add");
+      this.$router.push("/edit");
     },
   },
 });

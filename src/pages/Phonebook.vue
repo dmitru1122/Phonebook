@@ -13,7 +13,7 @@
         <MyButton
           actionTitle="add"
           my-style="green"
-          @click="$router.push('/add')"
+          @click="$router.push('/edit')"
         />
       </div>
       <Contact
@@ -45,7 +45,6 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import Contact from "../components/Contact.vue"; // @ is an alias to /src
-import { IContanct } from "../interfaces/appInterfaces";
 import MyButton from "@/components/MyButton.vue";
 import { mapGetters, mapActions } from "vuex";
 
@@ -59,7 +58,6 @@ export default defineComponent({
   data() {
     return {
       typeEdition: String,
-      // listContacts: [] as [IContanct],
     };
   },
   methods: {
@@ -73,12 +71,6 @@ export default defineComponent({
       get_contacts: "get_contacts",
       get_statusFetchContactsLoading: "get_statusFetchContactsLoading",
     }),
-  },
-
-  watch: {
-    get_contacts(newVal) {
-      //   this.fetchContacts();
-    },
   },
 
   mounted() {

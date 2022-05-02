@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import Phonebook from "@/pages/Phonebook.vue";
-import AddContact from "@/pages/AddContact.vue";
+import EditContact from "@/pages/EditContact.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -9,9 +9,9 @@ const routes: Array<RouteRecordRaw> = [
     component: Phonebook,
   },
   {
-    path: "/add",
-    name: "addContact",
-    component: AddContact,
+    path: "/edit",
+    name: "editContact",
+    component: EditContact,
   },
 ];
 

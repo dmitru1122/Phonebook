@@ -74,7 +74,7 @@ export default createStore<State>({
     },
   },
   actions: {
-    async fetchContacts({ state, commit }): Promise<void> {
+    async fetchContacts({ commit }): Promise<void> {
       try {
         commit("setFetchLoading", "loading");
         const { data } = await axios.get<IContanct[]>(
@@ -88,13 +88,13 @@ export default createStore<State>({
       }
     },
 
-    async addContacts({ state, commit }, form): Promise<void> {
+    async addContacts({ commit }, constact: IContanct): Promise<void> {
       try {
         commit("setAddLoading", "loading");
 
         const { data } = await axios.post<{ message: string; data: any }>(
           `http://localhost:3000/posts`,
-          form
+          constact
         );
 
         commit("addNewContact", data);
@@ -104,7 +104,7 @@ export default createStore<State>({
         commit("setAddLoading", "error");
       }
     },
-    async deleteContact({ state, commit }, id): Promise<void> {
+    async deleteContact({ commit }, id): Promise<void> {
       try {
         await axios.delete<{ message: string; data: any }>(
           `http://localhost:3000/posts/${id}`
@@ -115,14 +115,14 @@ export default createStore<State>({
         console.error(e);
       }
     },
-    updatedChosenContact({ commit }, chosenContact): void {
+    updatedChosenContact({ commit }, chosenContact: IContanct): void {
       commit("addChosenContact", chosenContact);
     },
     removeChosenContact({ commit }): void {
       commit("resetChosenContact");
     },
 
-    async updateContact({ commit }, chosenContact): Promise<void> {
+    async updateContact({ commit }, chosenContact: IContanct): Promise<void> {
       try {
         console.log(chosenContact);
         await axios.put<{ message: string; data: any }>(
