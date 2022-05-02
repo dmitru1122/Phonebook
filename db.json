@@ -1,13 +1,5 @@
 {
-  "posts": [
-    {
-      "firstName": "fsdf",
-      "lastName": "sdf",
-      "email": "tert@sdf.xc",
-      "phoneNumber": "231",
-      "id": 5
-    }
-  ],
+  "posts": [],
   "comments": [],
   "profile": {
     "name": "typicode"

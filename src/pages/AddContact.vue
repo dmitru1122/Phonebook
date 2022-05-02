@@ -108,7 +108,7 @@ export default defineComponent({
   },
 
   mounted() {
-    if (this.get_chosenContact) {
+    if (this.get_chosenContact?.id) {
       console.log(this.get_chosenContact);
       this.contact = this.get_chosenContact;
     }
@@ -127,7 +127,6 @@ export default defineComponent({
 
     close(): void {
       this.clear();
-      console.log(this.get_chosenContact?.id);
       if (this.get_chosenContact) {
         this.removeChosenContact();
       }
@@ -151,6 +150,11 @@ export default defineComponent({
     get_statusAddContactLoading(newVal) {
       if (newVal === "success") {
         this.contact = {} as IContanct;
+      }
+    },
+    get_chosenContact(newVal) {
+      if (newVal.id) {
+        this.contact = newVal;
       }
     },
   },

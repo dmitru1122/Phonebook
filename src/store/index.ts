@@ -2,26 +2,28 @@ import { createStore } from "vuex";
 import axios from "axios";
 import { IContanct } from "@/interfaces/appInterfaces";
 
+let status: "default" | "success" | "error" | "loading";
+
 export interface State {
   contacts: Array<IContanct>;
   chosenContact: IContanct;
-  isFetchContactsLoading: boolean;
-  statusAddContactLoading: string;
+  statusFetchContactsLoading: typeof status;
+  statusAddContactLoading: typeof status;
 }
 
 export default createStore<State>({
   state: {
     contacts: [],
     chosenContact: {} as IContanct,
-    isFetchContactsLoading: false,
+    statusFetchContactsLoading: "default",
     statusAddContactLoading: "default",
   },
   getters: {
     get_contacts(state) {
       return state.contacts;
     },
-    get_isFetchContactsLoading(state) {
-      return state.isFetchContactsLoading;
+    get_statusFetchContactsLoading(state): typeof status {
+      return state.statusFetchContactsLoading;
     },
     get_statusAddContactLoading(state) {
       return state.statusAddContactLoading;
@@ -37,17 +39,17 @@ export default createStore<State>({
     addNewContact(state, contact) {
       state.contacts = [...state.contacts, contact];
     },
-    setFetchLoading(state, bool) {
-      state.isFetchContactsLoading = bool;
+    setFetchLoading(state, newStatus) {
+      state.statusFetchContactsLoading = newStatus;
     },
     removeItem(state, id) {
       const i = state.contacts.map((item) => item.id).indexOf(id);
       state.contacts.splice(i, 1);
     },
 
-    setAddLoading(state, bool) {
-      state.statusAddContactLoading = bool;
-      if (bool === "success" || bool === "error") {
+    setAddLoading(state, newStatus) {
+      state.statusAddContactLoading = newStatus;
+      if (newStatus === "success" || newStatus === "error") {
         setTimeout(() => {
           state.statusAddContactLoading = "default";
         }, 2000);
@@ -74,15 +76,15 @@ export default createStore<State>({
   actions: {
     async fetchContacts({ state, commit }): Promise<void> {
       try {
-        commit("setFetchLoading", true);
+        commit("setFetchLoading", "loading");
         const { data } = await axios.get<IContanct[]>(
           "http://localhost:3000/posts"
         );
         commit("setContacts", data);
+        commit("setFetchLoading", "success");
       } catch (e) {
         console.error(e);
-      } finally {
-        commit("setFetchLoading", false);
+        commit("setFetchLoading", "error");
       }
     },
 
